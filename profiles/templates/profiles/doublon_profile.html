@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+
+        {% block title %} 
+            Pb profile!
+        {% endblock title %}
+
+
+
+
+        {% block content %}
+
+        <h3>Warning you already have account !!!</h3>
+        <p>
+            You have 2 choices :
+        </p>
+
+        <ul>
+            <li>
+                Edit your profile page <a href="{% url 'profiles:edit-profil' %}">here</a>
+            </li>
+            <li>
+                DELETE your profile page<a href="{% url 'profiles:delete-profile' %}">DELETE</a>
+            </li>
+        </ul>
+
+        {% endblock content %}

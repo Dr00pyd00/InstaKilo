@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+
+        {% block title %} 
+            Delete Post!
+        {% endblock title %}
+
+
+
+
+        {% block content %}
+        <h3>Are you sure to delete the article:</h3>
+        <ul>
+            <li>Title : {{article.title}}</li>
+            <li>Updated : {{article.update_date}}</li>
+            
+        </ul>
+
+        <div class="form-article-delete-container">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input type="submit" value="DELETE" name="delete" id="">
+                <input type="submit" value="Back" name="back">
+            </form>
+        </div>
+
+
+        {% endblock content %}

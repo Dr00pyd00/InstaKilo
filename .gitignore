@@ -1,0 +1,9 @@
+*.sqlite3
+
+__pycache__/
+
+*.pyc
+*.pyo
+*.log
+
+my_world/

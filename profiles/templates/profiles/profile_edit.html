@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+
+        {% block title %} 
+            Profil Gestion!
+        {% endblock title %}
+
+{% block messages_auth %} {% endblock messages_auth %}
+
+
+        {% block content %}
+
+        <h2>creation profile of {{user}}:</h2>
+
+        <div class="creation-profile-container">
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input type="submit" value="Creation!" name="" id="">
+            </form>
+        </div>
+
+        {% endblock content %}

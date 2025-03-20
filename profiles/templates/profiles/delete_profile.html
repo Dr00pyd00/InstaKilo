@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+
+        {% block title %} 
+        
+        {% endblock title %}
+
+
+
+
+        {% block content %}
+
+        <h3>Are you sure to delete {{request.user}} Profile page ???</h3>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="DELETE" name="delete">
+            <input type="submit" value="Cancel" name="cancel" id="">
+        </form>
+
+        {% endblock content %}

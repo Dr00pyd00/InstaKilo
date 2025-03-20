@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+
+        {% block title %} 
+        My Profile!
+        {% endblock title %}
+
+
+
+
+        {% block content %}
+        <h2>{{user}}'s' profile :</h2>
+
+        <div class="personnal-info-container">
+            <ul>
+                <li>
+                    First name : {{profile.first_name}}
+                </li>
+                <li>
+                    Last name : {{profile.last_name}}
+                </li>
+                <li>
+                    Country : {{profile.country}}
+                </li>
+                <li>
+                    Age : {{profile.age}}
+                </li>
+            </ul>
+        </div>
+
+        <div class="Photo-container">
+            <img src="{{profile.profile_photo.url}}" alt="Profile Photo">
+        </div>
+
+        <div class="biography-container">
+            <p>
+                {{profile.presentation}}
+            </p>
+        </div>
+       
+
+        {% endblock content %}

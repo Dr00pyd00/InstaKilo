@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {% endblock title %}</title>
+</head>
+<body>
+    <a href="{% url 'main:home' %}"><h1>InstaKilo</h1></a>
+   
+    <hr>
+
+    <!-- ma navbar en 3 parties:
+            -connexion
+            -profile
+            -articles      
+    -->
+    <nav>
+        <!-- Trucs pour la page profile etc -->
+        <div class="profiles-links-container">
+            <ul>               
+                <a href="{% url 'profiles:my-profile' %}">My Profile</a>____
+                <a href="{% url 'profiles:edit-profil' %}">Edit Profil</a>____
+                <a href="{% url 'profiles:create-profile' %}">Create Profile</a>____
+            </ul>
+        </div>
+        <!--  Trucs pour creer un compte -->
+        <div class="accounts-links-container">
+            <ul>
+                 <a href="{% url 'my_auth:registration' %}">Create account</a>____
+
+            </ul>
+        </div>
+        <!-- Trucs pour les articles  -->
+         <div class="articles-links-container">
+            <ul>
+                <a href="{% url 'articles:my-articles' %}">My Articles</a>
+                <a href="{% url 'articles:create-article' %}">Create New Article</a>
+            </ul>
+         </div>
+
+
+         <!-- salutation et statut de l'user -->
+        <div class="messages-container">
+                <p>
+                    {% if user.is_authenticated %}
+                    Hello {{user.username}} ! <a href="{% url 'my_auth:logout' %}">logout</a>
+                    {% else %}
+                    tu n'es pas connecté ! <a href="{% url 'my_auth:login' %}">login</a>  or <a href="{% url 'my_auth:registration' %}">registration!</a>
+                    {% endif %} 
+                </p>
+        </div>
+        <!-- message de renseignement des actions precedentes genre delte/update de trucs -->
+        <div class="explication-message-container">
+            {% if messages %}
+            <hr>
+                {% for message in messages %}
+                <p>
+                    {{message}}
+                </p>
+                {% endfor %}
+            {% endif %}
+
+        </div>
+    </nav>
+
+    <hr>
+    
+        {% block content %}
+        {% endblock content %}
+</body>
+</html>

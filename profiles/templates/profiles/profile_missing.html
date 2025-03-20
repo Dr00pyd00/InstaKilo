@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+
+        {% block title %} 
+            Profile!
+        {% endblock title %}
+
+
+
+
+        {% block content %}
+
+        <h3>You have not yet page profile done ! <br>Create one now :</h3>
+
+        <p>
+            Click <a href="{% url 'profiles:create-profile' %}">here</a> for setup your profile page!
+        </p>
+        {% endblock content %}

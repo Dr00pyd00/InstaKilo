@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+
+        {% block title %} 
+            Write post!
+        {% endblock title %}
+
+
+
+
+        {% block content %}
+
+        <h3>Write your Post !!</h3>
+        <div class="form-article-container">
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input type="submit" value="Post!">
+
+            </form>
+        </div>
+        {% endblock content %}
