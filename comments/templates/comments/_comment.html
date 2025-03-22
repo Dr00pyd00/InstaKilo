@@ -1,0 +1,34 @@
+<!--  Ici je met le plan d'un commentaire model : -->
+
+
+
+        <small>
+            From : <strong>{{comment.user.username}}</strong> 
+        </small>
+
+        <p>
+            {{comment.text}}
+        </p>
+
+        <small>
+            posted : {{comment.create_date|date:"d M Y H:i"}}
+        </small><br>
+
+
+        <!-- gestion suppression et edit pour l'user du message,
+            et delete only pour l'user de l'article -->
+        {% if comment.user == request.user %}
+        <small>
+            <a href="{% url 'comments:edit' comment.pk %}">edit</a> //
+            <a href="{% url 'comments:delete' comment.pk %}">delete</a>
+        </small>
+        {% elif article.user == request.user %}
+        <small>
+            <a href="{% url 'comments:delete' comment.pk %}">delete</a>
+        </small>
+        {% endif %} <br>
+
+     
+
+
+

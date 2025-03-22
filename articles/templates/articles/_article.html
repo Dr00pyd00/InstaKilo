@@ -1,0 +1,28 @@
+
+<!-- Ici je met la structure de mon article entier pour ne pas avoir a le refaire a chaque fois: -->
+
+{% if article %}
+
+<h3>{{article.title}}</h3>
+            {% if article.image %}
+            <img src="{{article.image.url}}" alt="Article pic !">
+            {% else %}
+            <small>//No image for this post !//</small>
+            {% endif %}
+            <p>{{article.text}}</p>
+            <small>
+                Autor : <strong>{{article.user.username}} </strong> <br>
+                Updated : {{article.update_date|date:"d M Y H:i"}}
+            </small>
+
+            
+            <!-- if pour edit ou delete l'article si c'est le connecté le proprio -->
+            {% if article.user == request.user %}
+            <a href="{% url 'articles:update' article.id %}">Edit</a> ||
+            <a href="{% url 'articles:delete' article.id %}">Delete</a>
+            {% endif %}
+
+{% else %}
+            <h3>No article in database!</h3>
+
+{% endif %}

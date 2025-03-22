@@ -7,76 +7,49 @@
 
 
 
-
         {% block content %}
         <h3>Article Details:</h3>
         <hr>
-<!-- corps de l'article a afficher : -->
-        <div class="article-detail-container">
-            <h3>{{article}}</h3>
-            {% if article.image %}
-            <img src="{{article.image.url}}" alt="Article pic !">
-            {% else %}
-            <small>No image for this post !</small>
-            {% endif %}
-            <p>{{article.text}}</p>
-            <small>
-                By {{article.user}} <br>
-                {{article.update_date}}
-            </small>
-            
-            <!--  affichage du coeur en fonction du dtatut du like: -->
-            <div class="like-container">
-                <form action="{% url 'articles:detail' article.id %}" method="POST">
-                    {% csrf_token %}
-                          <button type="submit" name="like" class="like-button" data-article-id="{{article.id}}">
-                                {% if user_like_statut and user_like_statut.liked %}
-                                    <span class="heart-liked">❤️</span>
-                                {% else %}
-                                    <span class="heart-avoid">🤍</span>
-                                {% endif %}
-                          </button>
-                </form>
 
-            </div>
-            <!-- if pour edit ou delete l'article si c'est le connecté le proprio -->
-             {% if article.user == request.user %}
-                <a href="{% url 'articles:update' article.id %}">Edit</a> ||
-                <a href="{% url 'articles:delete' article.id %}">Delete</a>
-             {% endif %}
-            <hr>
+        <!--  FAIT -->
+        <!-- corps de l'article a afficher : -->
+        <div class="article-detail-container">
+            {% include 'articles/_article.html' %}
         </div>
+
+
+        <!--  FAIT-->
+        <!--  affichage du coeur en fonction du dtatut du like: -->
+        <div class="like-container">
+            {% include 'articles/_like.html' %}
+        </div>
+
+
+
+        <!--  FAIT -->
         <!-- commentaire posté et visibles : -->
         <div class="commentary-posted-container">
-            {% if comments %} 
-            ################COMMENTS######## <br>
-                {% for comment in comments %}
-                   <small>
-                        from : {{comment.user}} 
-                   </small>
-                    <p>
-                        {{comment.text}}
-                    </p>
-                    <small>
-                        posted : {{comment.create_date}}
-                    </small><br>
-                            <!-- gestion suppression et edit pour l'user du message,
-                              et delete only pour l'user de l'article -->
-                            {% if comment.user == request.user %}
-                            <small>
-                                <a href="{% url 'comments:edit' comment.pk %}">edit</a> //
-                                <a href="{% url 'comments:delete' comment.pk %}">delete</a>
-                            </small>
-                            {% elif article.user == request.user %}
-                            <small>
-                                <a href="{% url 'comments:delete' comment.pk %}">delete</a>
-                            </small>
-                            {% endif %} <br>
-                    ################################### <br>
-                {% endfor %}
-            {% endif %}
+        {% if comments %} 
 
+            ################COMMENTS######## <br>
+
+                {% for comment in comments %}
+                    {% include 'comments/_comment.html' %}
+                    <br>
+                    ----------------------------------------
+                    <br>
+                   
+                {% endfor %}
+
+            ########    ######   ####
+
+        {% else %}
+
+        <h4>No comment for now !</h4>
+
+            {% endif %}
         </div>
+
         <!-- commentaire à poster : -->
         <div class="commentary-form-container">
             <h5>Leave comment:</h5>

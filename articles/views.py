@@ -118,5 +118,36 @@ def ArticleDetail(request: HttpRequest, pk: int) -> HttpResponse:
         }
     
     return render(request, 'articles/article_detail.html', ctx)
+
+
+# vue pour mettre un like ou le passer en unlike en boucle:
+def LikeOfArticle(request, article_id):
+
+    if request.method == 'POST':
+        # je chope l'article :
+        article = get_object_or_404(Article, pk= article_id)
+
+        # je check si request.user a deja like ou pas :
+        user_like_statut = LikeArticle.objects.filter(article=article, user=request.user).first()  # sort obj LikeArticle ou None.
+
+        # si l'user a deja un like , j'inverse le like sinon je créé un  nouvel obj:
+        if 'like' in request.POST:
+            # j'inverse le bool :
+            if user_like_statut:
+                user_like_statut.liked = not user_like_statut.liked
+                user_like_statut.save()
+            else:
+                LikeArticle.objects.create(article=article, user=request.user, liked=True)
+
+        # ici je check si y'a un 'next' dans le POST qui refere a l'url:
+        next_url = request.POST.get('next') or request.META.get('HTTP_REFERER', 'articles:feed')
+        return redirect(next_url)
+    
+    # si jamais qq accede en GET:
+    return redirect(request.META.get('HTTP_REFERER', 'articles:feed'))
+
+
+
+
     
 

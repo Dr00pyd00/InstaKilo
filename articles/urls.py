@@ -10,5 +10,7 @@ urlpatterns = [
     path('update/<int:pk>/', views.ArticleUpdate,name='update'),
     path('delete/<int:pk>', views.ArticleDelete, name='delete'),
 
+    path('like/<int:article_id>', views.LikeOfArticle, name='like-statut'),   # gestion du like/unlike
+
         
 ]

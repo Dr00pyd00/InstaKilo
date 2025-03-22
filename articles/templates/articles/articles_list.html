@@ -9,46 +9,40 @@
 
 
         {% block content %}
-        <h3>Here my posts :</h3>
+
+        <h3>Here my posts : updates</h3>
+
         <!-- Je boucle pour parcourir tout mes articles -->
         {% if articles %}
-            {% for article in articles %}
-                <div class="article-container">
-                    <h3>{{article.title}}</h3>
-                    {% if article.image %}
-                    <img src="{{article.image.url}}" alt="" >
-                    {% else %}
-                    <p>No picture for now 😊</p>
-                    {% endif %}
-                    <p>
-                        {{article.text}}
-                    </p>
-                    <small>
-                        for {{article.update_date|date:"F d, Y"}}
-                    </small><br>
-                    <small>
-                        <a href="{% url 'articles:update' article.id %}">Edit</a> ||
-                        <a href="{% url 'articles:delete' article.id %}">Delete</a>
-                    </small>
-                    <!--  affichage du coeur en fonction du dtatut du like: -->
-            <div class="like-container">
-                <form action="{% url 'articles:detail' article.id %}" method="POST">
-                    {% csrf_token %}
-                          <button type="submit" name="like" class="like-button" data-article-id="{{article.id}}">
-                                {% if user_like_statut and user_like_statut.liked %}
-                                    <span class="heart-liked">❤️</span>
-                                {% else %}
-                                    <span class="heart-avoid">🤍</span>
-                                {% endif %}
-                          </button>
-                </form>
 
-            </div>
+            {% for article in articles %}
+                <!-- j'affiche le contenu de l'article : -->
+                <div class="article-container">
+                    {% include 'articles/_article.html' %}
+                </div>   
+
+
+                <!--  affichage du coeur en fonction du statut du like: -->
+                <div class="like-container">
+                    
+                    {% include 'articles/_like.html' %}
                 </div>
+                
                 <hr>
+                <h3>Comments :</h3>
+                <!-- affiche les coms -->
+                <div class="comment-container">
+                    {% for comment in article.comment_set.all %}
+                        {% include 'comments/_comment.html' %}
+                    {% endfor %}
+                </div>
+                    <hr>
             {% endfor %}
+
         {% else %}
+
         <h4>Nothing for now !</h4>
+
         {% endif %}
 
         {% endblock content %}
