@@ -1,0 +1,40 @@
+<!-- corps de l'article a afficher : -->
+<div class="article-detail-container">
+    {% include 'articles/_article.html' %}
+</div>
+
+
+<!--  FAIT-->
+<!--  affichage du coeur en fonction du dtatut du like: -->
+<div class="like-container">
+    {% include 'articles/_like.html' %}
+</div>
+
+
+
+<!--  FAIT -->
+<!-- commentaire posté et visibles : -->
+<div class="commentary-posted-container">
+{% if article.comment_set.all %} 
+
+    ################COMMENTS######## <br>
+
+        {% for comment in article.comment_set.all %}
+            {% include 'comments/_comment.html' %}
+            <br>
+            ----------------------------------------
+            <br>
+           
+        {% endfor %}
+
+    ########    ######   ####
+
+{% else %}
+
+<h4>No comment for now !</h4>
+
+    {% endif %}
+</div>
+
+<!-- commentaire à poster : -->
+    {% include 'comments/_post_a_comment.html' %}

@@ -16,34 +16,7 @@
         {% if articles %}
 
             {% for article in articles %}
-                <!-- j'affiche le contenu de l'article : -->
-                <div class="article-container">
-                    {% include 'articles/_article.html' %}
-                </div>   
-
-
-                <!--  affichage du coeur en fonction du statut du like: -->
-                <div class="like-container">
-                    
-                    {% include 'articles/_like.html' %}
-                </div>
-                
-                <hr>
-                <h3>Comments :</h3>
-                <!-- affiche les coms -->
-                <div class="comment-container">
-                    {% for comment in article.comment_set.all %}
-                        {% include 'comments/_comment.html' %}
-                    {% endfor %}
-                </div>
-                    <hr>
-                    
+               {% include 'articles/_full_article.html' %}
             {% endfor %}
-
-        {% else %}
-
-        <h4>Nothing for now !</h4>
-
         {% endif %}
-
         {% endblock content %}

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %} HomePage {% endblock title %}
+                     
+
+
+{% block content %}
+
+
+<!-- Feed d'actualité : -->
+ <hr>
+ <h2>Feed of Posts here :</h2>
+{% if articles %}
+
+    {% for article in articles %}
+        <div class="article-feed-container">
+            <a href="{% url 'articles:detail' article.id %}">
+                <h3>{{article}}</h3>
+            </a>
+            
+            {% if article.image %}
+            <img src="{{article.image.url}}" alt="Article pic !">
+            {% else %}
+            <small>No image for this post !</small>
+            {% endif %}
+            <p>{{article.text}}</p>
+            <small>
+                By {{article.user}} <br>
+                {{article.update_date}}
+            </small>
+            <!-- if pour edit ou delete l'article si c'est le connecté le proprio -->
+             {% if article.user == request.user %}
+                <a href="{% url 'articles:update' article.id %}">Edit</a> ||
+                <a href="{% url 'articles:delete' article.id %}">Delete</a>
+             {% endif %}
+            
+            <!--  affichage du coeur en fonction du dtatut du like: -->
+            <div class="like-container">
+                <form action="{% url 'articles:detail' article.id %}" method="POST">
+                    {% csrf_token %}
+                          <button type="submit" name="like" class="like-button" data-article-id="{{article.id}}">
+                                {% if user_like_statut and user_like_statut.liked %}
+                                    <span class="heart-liked">❤️</span>
+                                {% else %}
+                                    <span class="heart-avoid">🤍</span>
+                                {% endif %}
+                          </button>
+                </form>
+
+            </div>
+            <hr>
+        </div>
+
+    {% endfor %}
+
+{% endif %}
+
+
+{% endblock content %}
+
+
+
+
+

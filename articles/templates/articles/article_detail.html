@@ -51,13 +51,6 @@
         </div>
 
         <!-- commentaire à poster : -->
-        <div class="commentary-form-container">
-            <h5>Leave comment:</h5>
-            <form action="" method="POST">
-                {% csrf_token %}
-                {{form.as_p}}
-                <input type="submit" value="Post!">
-            </form>
-        </div>
+            {% include 'comments/_post_a_comment.html' %}
 
         {% endblock content %}

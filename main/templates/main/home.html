@@ -1,62 +1,68 @@
 {% extends 'base.html' %}
 
-{% block title %} HomePage {% endblock title %}
-                     
+        {% block title %} 
+        Feed
+        {% endblock title %}
 
+        {% block content %}
+        <h3>Feed of Insta: TAMER</h3>
 
-{% block content %}
-
-
-<!-- Feed d'actualité : -->
- <hr>
- <h2>Feed of Posts here :</h2>
+        <!-- Je boucle pour parcourir tout mes articles -->
 {% if articles %}
 
-    {% for article in articles %}
-        <div class="article-feed-container">
-            <a href="{% url 'articles:detail' article.id %}">
-                <h3>{{article}}</h3>
-            </a>
-            
-            {% if article.image %}
-            <img src="{{article.image.url}}" alt="Article pic !">
-            {% else %}
-            <small>No image for this post !</small>
-            {% endif %}
-            <p>{{article.text}}</p>
-            <small>
-                By {{article.user}} <br>
-                {{article.update_date}}
-            </small>
-            <!-- if pour edit ou delete l'article si c'est le connecté le proprio -->
-             {% if article.user == request.user %}
-                <a href="{% url 'articles:update' article.id %}">Edit</a> ||
-                <a href="{% url 'articles:delete' article.id %}">Delete</a>
-             {% endif %}
-            
-            <!--  affichage du coeur en fonction du dtatut du like: -->
-            <div class="like-container">
-                <form action="{% url 'articles:detail' article.id %}" method="POST">
-                    {% csrf_token %}
-                          <button type="submit" name="like" class="like-button" data-article-id="{{article.id}}">
-                                {% if user_like_statut and user_like_statut.liked %}
-                                    <span class="heart-liked">❤️</span>
-                                {% else %}
-                                    <span class="heart-avoid">🤍</span>
-                                {% endif %}
-                          </button>
-                </form>
 
-            </div>
-            <hr>
+    {% for article in articles %}
+
+                        <!-- corps de l'article a afficher : -->
+        <div class="article-detail-container">
+            {% include 'articles/_article.html' %}
         </div>
 
+
+        <!--  FAIT-->
+        <!--  affichage du coeur en fonction du dtatut du like: -->
+        <div class="like-container">
+            {% include 'articles/_like.html' %}
+        </div>
+
+
+
+        <!--  FAIT -->
+        <!-- commentaire posté et visibles : -->
+        <div class="commentary-posted-container">
+        {% if article.comment_set.all %} 
+
+            ################COMMENTS######## <br>
+                <!-- {% for comment in article.comment_set.all %}     -->
+                {% for comment in article.comment_set.all %}
+                    {% include 'comments/_comment.html' %}
+                    <br>
+                    ----------------------------------------
+                    <br>
+                {% endfor %}
+
+            ########    ######   ####
+
+        {% else %}
+        <h4>No comment for now !</h4>
+
+        {% endif %}
+        </div>
+
+        <!-- commentaire à poster : -->
+            {% include 'comments/_post_a_comment.html' %}
+      
     {% endfor %}
 
+
+
+
+
+
+{% else %}
+
+        <h4>Nothing for now !</h4>
+        
 {% endif %}
 
-
-
-{% endblock content %}
-
-
+        {% endblock content %}
