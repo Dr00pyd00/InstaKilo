@@ -27,19 +27,19 @@
 
 
 
-        <!--  FAIT -->
+
+        <!--  TODO : mettre  un lien rapide pour acceder au detail pour voir tout les coms / rendre joli. -->
         <!-- commentaire posté et visibles : -->
         <div class="commentary-posted-container">
-        {% if article.comment_set.all %} 
+        {% if article.comment_set.last %} 
 
-            ################COMMENTS######## <br>
-                <!-- {% for comment in article.comment_set.all %}     -->
-                {% for comment in article.comment_set.all %}
+            ################LAST COMMENT######## <br>
+                {% with article.comment_set.last as comment %}
                     {% include 'comments/_comment.html' %}
                     <br>
                     ----------------------------------------
                     <br>
-                {% endfor %}
+                {% endwith %}
 
             ########    ######   ####
 
@@ -53,9 +53,6 @@
             {% include 'comments/_post_a_comment.html' %}
       
     {% endfor %}
-
-
-
 
 
 
